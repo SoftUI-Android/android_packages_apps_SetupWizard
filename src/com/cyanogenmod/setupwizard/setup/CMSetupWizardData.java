@@ -25,6 +25,8 @@ import android.util.Log;
 
 import com.android.internal.telephony.TelephonyIntents;
 import org.namelessrom.setupwizard.SetupWizardApp;
+import org.namelessrom.setupwizard.device.DeviceSpecificPages;
+
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
 
 import java.util.ArrayList;
@@ -63,12 +65,27 @@ public class CMSetupWizardData extends AbstractSetupData {
         }
         if (SetupWizardUtils.isOwner()) {
             pages.add(new CyanogenSettingsPage(mContext, this));
+            addDeviceSpecificPages(pages);
             pages.add(new OtherSettingsPage(mContext, this));
             pages.add(new DateTimePage(mContext, this));
             if (SetupWizardApp.DEBUG) Log.d(TAG, "added owner pages");
         }
+
         pages.add(new FinishPage(mContext, this));
         return new PageList(pages.toArray(new Page[pages.size()]));
+    }
+
+    private void addDeviceSpecificPages(ArrayList<Page> pages) {
+        ArrayList<Page> deviceSpecificPages = new DeviceSpecificPages(mContext, this).getPages();
+        final int devicePagesCount = deviceSpecificPages.size();
+        if (devicePagesCount != 0) {
+            for (final Page page : deviceSpecificPages) {
+                pages.add(page);
+            }
+        }
+        if (SetupWizardApp.DEBUG) {
+            Log.d(TAG, String.format("added %s device specific pages", devicePagesCount));
+        }
     }
 
 

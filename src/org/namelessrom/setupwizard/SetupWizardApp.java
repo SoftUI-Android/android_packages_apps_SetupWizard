@@ -20,6 +20,7 @@ package org.namelessrom.setupwizard;
 import android.app.Application;
 import android.app.StatusBarManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.SystemProperties;
 import android.provider.Settings;
 
@@ -53,11 +54,18 @@ public class SetupWizardApp extends Application {
 
     private StatusBarManager mStatusBarManager;
 
+    private static SetupWizardApp sInstance;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        sInstance = this;
         disableCaptivePortalDetection();
         mStatusBarManager = (StatusBarManager)getSystemService(Context.STATUS_BAR_SERVICE);
+    }
+
+    public static SetupWizardApp get() {
+        return sInstance;
     }
 
     public void disableStatusBar() {

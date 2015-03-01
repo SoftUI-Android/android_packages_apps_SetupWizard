@@ -46,6 +46,7 @@
     <uses-permission android:name="android.permission.BACKUP" />
     <uses-permission android:name="org.whispersystems.whisperpush.permissions.REGISTER" />
     <uses-permission android:name="cyanogenmod.permission.FINISH_SETUP" />
+    <uses-permission android:name="org.namelessrom.device.extra.CONTROL" />
 
     <permission
         android:name="cyanogenmod.permission.PROTECTED_APP"
