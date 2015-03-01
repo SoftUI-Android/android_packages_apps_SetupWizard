@@ -36,11 +36,12 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.cyanogenmod.setupwizard.R;
-import com.cyanogenmod.setupwizard.SetupWizardApp;
+import org.namelessrom.setupwizard.SetupWizardApp;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
 import com.cyanogenmod.setupwizard.ui.WebViewDialogFragment;
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
+
+import org.namelessrom.setupwizard.R;
 
 import java.util.Observable;
 import java.util.Observer;

@@ -144,7 +144,7 @@ public class LocalePicker extends LinearLayout {
      * The resource id for the default layout.
      */
     private static final int DEFAULT_LAYOUT_RESOURCE_ID =
-            com.cyanogenmod.setupwizard.R.layout.locale_picker;
+            org.namelessrom.setupwizard.R.layout.locale_picker;
 
     /**
      * Constant for unspecified size.
@@ -570,8 +570,8 @@ public class LocalePicker extends LinearLayout {
      */
     public LocalePicker(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        SELECTOR_WHEEL_ITEM_COUNT = context.getResources().getInteger(com.cyanogenmod.setupwizard.R.integer.local_picker_items);
-        SELECTOR_MIDDLE_ITEM_INDEX = context.getResources().getInteger(com.cyanogenmod.setupwizard.R.integer.local_picker_items)/2;
+        SELECTOR_WHEEL_ITEM_COUNT = context.getResources().getInteger(org.namelessrom.setupwizard.R.integer.local_picker_items);
+        SELECTOR_MIDDLE_ITEM_INDEX = context.getResources().getInteger(org.namelessrom.setupwizard.R.integer.local_picker_items)/2;
         mSelectorIndices= new int[SELECTOR_WHEEL_ITEM_COUNT];
         // process style attributes
         TypedArray attributesArray = context.obtainStyledAttributes(
@@ -583,7 +583,7 @@ public class LocalePicker extends LinearLayout {
 
         mSolidColor = attributesArray.getColor(R.styleable.NumberPicker_solidColor, 0);
 
-        mSelectionDivider = context.getDrawable(com.cyanogenmod.setupwizard.R.drawable.divider);
+        mSelectionDivider = context.getDrawable(org.namelessrom.setupwizard.R.drawable.divider);
 
         mSelectionDividerHeight = UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT;
 

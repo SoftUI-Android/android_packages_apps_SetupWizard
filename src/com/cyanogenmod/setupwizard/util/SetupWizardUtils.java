@@ -31,6 +31,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.cyanogenmod.setupwizard.ui.SetupWizardActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -147,28 +148,26 @@ public class SetupWizardUtils {
     public static void disableGMSSetupWizard(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(GOOGLE_SETUPWIZARD_PACKAGE,
-                            PackageManager.GET_ACTIVITIES |
-                                    PackageManager.GET_RECEIVERS | PackageManager.GET_SERVICES);
+                    .getPackageInfo(GOOGLE_SETUPWIZARD_PACKAGE, PackageManager.GET_ACTIVITIES |
+                            PackageManager.GET_RECEIVERS | PackageManager.GET_SERVICES);
             disableComponentArray(context, packageInfo.activities);
             disableComponentArray(context, packageInfo.services);
             disableComponentArray(context, packageInfo.receivers);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Enable to disable GMS");
+            Log.e(TAG, "Unable to disable GMS");
         }
     }
 
     public static void enableGMSSetupWizard(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(GOOGLE_SETUPWIZARD_PACKAGE,
-                            PackageManager.GET_ACTIVITIES |
-                                    PackageManager.GET_RECEIVERS | PackageManager.GET_SERVICES);
+                    .getPackageInfo(GOOGLE_SETUPWIZARD_PACKAGE, PackageManager.GET_ACTIVITIES |
+                            PackageManager.GET_RECEIVERS | PackageManager.GET_SERVICES);
             enableComponentArray(context, packageInfo.activities);
             enableComponentArray(context, packageInfo.services);
             enableComponentArray(context, packageInfo.receivers);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Unable to disable GMS");
+            Log.e(TAG, "Unable to enable GMS");
         }
     }
 

@@ -23,11 +23,10 @@ import android.os.Bundle;
 import java.util.ArrayList;
 
 public abstract class AbstractSetupData extends BroadcastReceiver implements SetupDataCallbacks {
-
     private static final String TAG = AbstractSetupData.class.getSimpleName();
 
     protected final Context mContext;
-    private ArrayList<SetupDataCallbacks> mListeners = new ArrayList<SetupDataCallbacks>();
+    private ArrayList<SetupDataCallbacks> mListeners = new ArrayList<>();
     private PageList mPageList;
 
     private int mCurrentPageIndex = 0;
@@ -87,8 +86,7 @@ public abstract class AbstractSetupData extends BroadcastReceiver implements Set
 
     @Override
     public boolean isCurrentPage(Page page) {
-        if (page == null) return false;
-        return page.getKey().equals(getCurrentPage().getKey());
+        return page != null && page.getKey().equals(getCurrentPage().getKey());
     }
 
     public boolean isFirstPage() {
@@ -104,7 +102,7 @@ public abstract class AbstractSetupData extends BroadcastReceiver implements Set
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (getCurrentPage().doNextAction() == false) {
+                if (!getCurrentPage().doNextAction()) {
                     if (advanceToNextUnhidden()) {
                         for (int i = 0; i < mListeners.size(); i++) {
                             mListeners.get(i).onNextPage();
@@ -121,7 +119,7 @@ public abstract class AbstractSetupData extends BroadcastReceiver implements Set
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (getCurrentPage().doPreviousAction() == false) {
+                if (!getCurrentPage().doPreviousAction()) {
                     if (advanceToPreviousUnhidden()) {
                         for (int i = 0; i < mListeners.size(); i++) {
                             mListeners.get(i).onPreviousPage();

@@ -15,8 +15,9 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.cyanogenmod.setupwizard"
+          package="org.namelessrom.setupwizard"
           android:versionCode="3"
+          android:versionName="1.0.1"
           android:sharedUserId="android.uid.system">
 
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
@@ -62,18 +63,19 @@
 
     <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="21" />
 
-    <application android:label="@string/app_name"
-                 android:icon="@drawable/icon"
+    <application android:name="org.namelessrom.setupwizard.SetupWizardApp"
+                 android:label="@string/app_name"
+                 android:icon="@mipmap/ic_launcher"
                  android:theme="@style/Theme.Setup"
-                 android:name=".SetupWizardApp">
+                 android:allowBackup="false">
 
         <uses-library android:name="org.cyanogenmod.hardware" android:required="false" />
 
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ui.SetupWizardActivity"
-                  android:label="@string/product_name"
+        <activity android:name="com.cyanogenmod.setupwizard.ui.SetupWizardActivity"
+                  android:label="@string/product_name_nameless"
                   android:launchMode="singleInstance"
                   android:excludeFromRecents="true"
                   android:uiOptions="none"

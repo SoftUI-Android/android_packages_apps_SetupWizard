@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.setupwizard;
+package org.namelessrom.setupwizard;
 
 
 import android.app.Application;
 import android.app.StatusBarManager;
 import android.content.Context;
+import android.os.SystemProperties;
 import android.provider.Settings;
 
 public class SetupWizardApp extends Application {
 
     public static final String TAG = SetupWizardApp.class.getSimpleName();
-    // Leave this off for release
-    public static final boolean DEBUG = false;
+
+    private static final String PROP_DEBUG = "ro.nameless.debug";
+
+    public static final boolean DEBUG = SystemProperties.getBoolean(PROP_DEBUG, false);
 
     public static final String ACTION_FINISHED = "com.cyanogenmod.setupwizard.SETUP_FINISHED";
 
@@ -41,8 +44,6 @@ public class SetupWizardApp extends Application {
     public static final String EXTRA_USE_IMMERSIVE = "useImmersiveMode";
     public static final String EXTRA_THEME = "theme";
     public static final String EXTRA_MATERIAL_LIGHT = "material_light";
-
-    private static final String KEY_DETECT_CAPTIVE_PORTAL = "captive_portal_detection_enabled";
 
     public static final int REQUEST_CODE_SETUP_WIFI = 0;
     public static final int REQUEST_CODE_SETUP_GMS= 1;
@@ -70,10 +71,12 @@ public class SetupWizardApp extends Application {
     }
 
     public void disableCaptivePortalDetection() {
-        Settings.Global.putInt(getContentResolver(), KEY_DETECT_CAPTIVE_PORTAL, 0);
+        Settings.Global.putInt(getContentResolver(),
+                Settings.Global.CAPTIVE_PORTAL_DETECTION_ENABLED, 0);
     }
 
     public void enableCaptivePortalDetection() {
-        Settings.Global.putInt(getContentResolver(), KEY_DETECT_CAPTIVE_PORTAL, 1);
+        Settings.Global.putInt(getContentResolver(),
+                Settings.Global.CAPTIVE_PORTAL_DETECTION_ENABLED, 1);
     }
 }

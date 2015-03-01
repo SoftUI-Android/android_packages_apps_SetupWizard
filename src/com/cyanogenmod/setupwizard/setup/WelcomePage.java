@@ -29,9 +29,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.ui.LocalePicker;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
+
+import org.namelessrom.setupwizard.R;
 
 import java.util.Locale;
 

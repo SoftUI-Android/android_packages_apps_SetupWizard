@@ -22,9 +22,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
-import com.cyanogenmod.setupwizard.ui.SetupWizardActivity;
+
+import org.namelessrom.setupwizard.R;
 
 public class SimCardMissingPage extends SetupPage {
 

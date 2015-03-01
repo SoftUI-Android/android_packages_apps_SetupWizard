@@ -27,11 +27,12 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.cyanogenmod.setupwizard.R;
-import com.cyanogenmod.setupwizard.SetupWizardApp;
+import org.namelessrom.setupwizard.SetupWizardApp;
 import com.cyanogenmod.setupwizard.ui.LoadingFragment;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
+
+import org.namelessrom.setupwizard.R;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

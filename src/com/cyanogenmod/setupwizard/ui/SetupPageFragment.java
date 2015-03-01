@@ -25,9 +25,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.setup.Page;
 import com.cyanogenmod.setupwizard.setup.SetupDataCallbacks;
+
+import org.namelessrom.setupwizard.R;
 
 public abstract class SetupPageFragment extends Fragment {
 

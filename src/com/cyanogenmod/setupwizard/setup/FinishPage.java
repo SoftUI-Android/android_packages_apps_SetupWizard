@@ -21,8 +21,9 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
+
+import org.namelessrom.setupwizard.R;
 
 public class FinishPage extends SetupPage {
 

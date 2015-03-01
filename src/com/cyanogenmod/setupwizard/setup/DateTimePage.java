@@ -41,9 +41,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
 
+import org.namelessrom.setupwizard.R;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.util.ArrayList;

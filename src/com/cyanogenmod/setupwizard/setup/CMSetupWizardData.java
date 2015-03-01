@@ -21,15 +21,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.android.internal.telephony.TelephonyIntents;
-import com.cyanogenmod.setupwizard.ui.SetupWizardActivity;
+import org.namelessrom.setupwizard.SetupWizardApp;
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
 
 import java.util.ArrayList;
 
 public class CMSetupWizardData extends AbstractSetupData {
-
     private static final String TAG = CMSetupWizardData.class.getSimpleName();
 
     private boolean mTimeSet = false;
@@ -41,30 +41,34 @@ public class CMSetupWizardData extends AbstractSetupData {
 
     @Override
     protected PageList onNewPageList() {
-        ArrayList<Page> pages = new ArrayList<Page>();
+        ArrayList<Page> pages = new ArrayList<>();
         pages.add(new WelcomePage(mContext, this));
         pages.add(new WifiSetupPage(mContext, this));
         if (SetupWizardUtils.hasTelephony(mContext)) {
             pages.add(new SimCardMissingPage(mContext, this).setHidden(isSimInserted()));
+            if (SetupWizardApp.DEBUG) Log.d(TAG, "added sim card missing page");
         }
         if (SetupWizardUtils.isMultiSimDevice(mContext) && SetupWizardUtils.isOwner()) {
             pages.add(new ChooseDataSimPage(mContext, this).setHidden(!allSimsInserted()));
+            if (SetupWizardApp.DEBUG) Log.d(TAG, "added choose data sim page");
         }
         if (SetupWizardUtils.hasTelephony(mContext)) {
             pages.add(new MobileDataPage(mContext, this)
                     .setHidden(!isSimInserted() || SetupWizardUtils.isMobileDataEnabled(mContext)));
+            if (SetupWizardApp.DEBUG) Log.d(TAG, "added mobile data page");
         }
         if (SetupWizardUtils.hasGMS(mContext)) {
             pages.add(new GmsAccountPage(mContext, this).setHidden(true));
+            if (SetupWizardApp.DEBUG) Log.d(TAG, "added GMS page");
         }
         if (SetupWizardUtils.isOwner()) {
-            pages.add(new CyanogenServicesPage(mContext, this).setHidden(true));
             pages.add(new CyanogenSettingsPage(mContext, this));
             pages.add(new OtherSettingsPage(mContext, this));
             pages.add(new DateTimePage(mContext, this));
+            if (SetupWizardApp.DEBUG) Log.d(TAG, "added owner pages");
         }
         pages.add(new FinishPage(mContext, this));
-        return new PageList(pages.toArray(new SetupPage[pages.size()]));
+        return new PageList(pages.toArray(new Page[pages.size()]));
     }
 
 
@@ -109,11 +113,6 @@ public class CMSetupWizardData extends AbstractSetupData {
                 (GmsAccountPage) getPage(GmsAccountPage.TAG);
         if (gmsAccountPage != null) {
             gmsAccountPage.setHidden(!isConnected);
-        }
-        CyanogenServicesPage cyanogenServicesPage =
-                (CyanogenServicesPage) getPage(CyanogenServicesPage.TAG);
-        if (cyanogenServicesPage != null) {
-            cyanogenServicesPage.setHidden(!isConnected);
         }
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2013 The CyanogenMod Project
+     Copyright (C) 2015 The NamelessRom Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,18 +14,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/primary">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="product_name_nameless" translatable="false">nameless</string>
+    <string name="os_name_nameless" translatable="false">NamelessRom</string>
 
-    <ImageView
-        android:id="@+id/brand_logo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/brand_finish"
-        android:scaleType="centerInside"
-        android:padding="@dimen/content_margin_left"/>
-
-</LinearLayout>
+    <string name="setup_services_nameless">Nameless features</string>
+</resources>

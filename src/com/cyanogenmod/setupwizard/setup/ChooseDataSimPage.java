@@ -35,8 +35,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
+
+import org.namelessrom.setupwizard.R;
 
 import java.util.List;
 

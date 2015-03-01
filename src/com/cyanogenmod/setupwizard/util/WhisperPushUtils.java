@@ -65,13 +65,15 @@ public class WhisperPushUtils {
 
     public static void startRegistration(Context context) {
         String phoneNumber = getPhoneNumber(context);
-        Log.d(TAG, "Starting WhisperPush registration with number: " + phoneNumber);
         if (phoneNumber != null) {
+            Log.d(TAG, "Starting WhisperPush registration with number: " + phoneNumber);
             Intent intent = new Intent();
             intent.setAction(ACTION_REGISTER_NUMBER);
             intent.setClassName("org.whispersystems.whisperpush", "org.whispersystems.whisperpush.service.RegistrationService");
             intent.putExtra("e164number", phoneNumber);
             context.startService(intent);
+        } else {
+            Log.d(TAG, "number is null, skipping WhisperPush registration");
         }
     }
 

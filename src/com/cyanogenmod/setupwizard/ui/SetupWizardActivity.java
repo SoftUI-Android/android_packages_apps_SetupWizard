@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -39,14 +40,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.cyanogenmod.setupwizard.R;
-import com.cyanogenmod.setupwizard.SetupWizardApp;
+import org.namelessrom.setupwizard.SetupWizardApp;
 import com.cyanogenmod.setupwizard.setup.CMSetupWizardData;
 import com.cyanogenmod.setupwizard.setup.Page;
 import com.cyanogenmod.setupwizard.setup.SetupDataCallbacks;
 import com.cyanogenmod.setupwizard.util.EnableAccessibilityController;
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
 
+import org.namelessrom.setupwizard.R;
 
 public class SetupWizardActivity extends Activity implements SetupDataCallbacks {
 
@@ -193,6 +194,7 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks 
     @Override
     public void onNextPage() {
         Page page = mSetupData.getCurrentPage();
+        if (SetupWizardApp.DEBUG) Log.d(TAG, String.format("onNextPage: %s", page.getKey()));
         if (!isFinishing()) {
             page.doLoadAction(getFragmentManager(), Page.ACTION_NEXT);
         }
@@ -201,6 +203,7 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks 
     @Override
     public void onPreviousPage() {
         Page page = mSetupData.getCurrentPage();
+        if (SetupWizardApp.DEBUG) Log.d(TAG, String.format("onPreviousPage: %s", page.getKey()));
         if (!isFinishing()) {
             page.doLoadAction(getFragmentManager(), Page.ACTION_PREVIOUS);
         }
@@ -398,7 +401,7 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks 
         }
         SetupWizardUtils.disableGMSSetupWizard(this);
         SetupWizardUtils.disableSetupWizard(this);
-        final ThemeManager tm = (ThemeManager) this.getSystemService(THEME_SERVICE);
+        final ThemeManager tm = (ThemeManager) getSystemService(Context.THEME_SERVICE);
         tm.removeClient(mThemeChangeListener);
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);

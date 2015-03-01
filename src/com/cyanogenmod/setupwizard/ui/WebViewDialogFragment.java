@@ -25,7 +25,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.cyanogenmod.setupwizard.R;
+import org.namelessrom.setupwizard.R;
 
 public class WebViewDialogFragment extends DialogFragment {
 

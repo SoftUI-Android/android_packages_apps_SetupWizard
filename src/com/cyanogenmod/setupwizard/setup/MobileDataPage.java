@@ -32,9 +32,10 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.cyanogenmod.setupwizard.R;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
+
+import org.namelessrom.setupwizard.R;
 
 public class MobileDataPage extends SetupPage {
 
