@@ -22,7 +22,7 @@ LOCAL_SRC_FILES += $(default_classes)
 
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_PACKAGE_NAME := SetupWizard
+LOCAL_PACKAGE_NAME := NamelessSetupWizard
 LOCAL_CERTIFICATE := platform
 LOCAL_PRIVILEGED_MODULE := true
 
