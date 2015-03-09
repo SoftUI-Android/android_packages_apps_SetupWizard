@@ -69,15 +69,12 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks,
 
     private final Handler mHandler = new Handler();
 
-    private boolean mIsGuestUser = false;
-
     private volatile boolean mIsFinishing = false;
 
     private final ArrayList<Runnable> mFinishRunnables = new ArrayList<Runnable>();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setWindowAnimations(android.R.anim.fade_in);
         setContentView(R.layout.setup_main);
         mRootView = findViewById(R.id.root);
         mReveal = (ImageView)mRootView.findViewById(R.id.reveal);
@@ -120,20 +117,6 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks,
                 return mEnableAccessibilityController.onInterceptTouchEvent(event);
             }
         });
-        // Since this is a new component, we need to disable here if the user
-        // has already been through setup on a previous version.
-        try {
-            if (Settings.Secure.getInt(getContentResolver(),
-                    Settings.Secure.USER_SETUP_COMPLETE) == 1) {
-                finalizeSetup();
-            }
-        } catch (Settings.SettingNotFoundException e) {
-            // Continue with setup
-        }
-        mIsGuestUser =  SetupWizardUtils.isGuestUser(this);
-        if (mIsGuestUser) {
-            finalizeSetup();
-        }
         registerReceiver(mSetupData, mSetupData.getIntentFilter());
     }
 
@@ -318,7 +301,7 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks,
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.translucent_enter, R.anim.translucent_exit);
     }
 
     private void setupRevealImage() {
@@ -394,7 +377,6 @@ public class SetupWizardActivity extends Activity implements SetupDataCallbacks,
                 final ThemeManager tm =
                         (ThemeManager) SetupWizardActivity.this.getSystemService(THEME_SERVICE);
                 tm.removeClient(SetupWizardActivity.this);
-                SetupStats.sendEvents(SetupWizardActivity.this);
                 SetupWizardUtils.disableGMSSetupWizard(SetupWizardActivity.this);
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
