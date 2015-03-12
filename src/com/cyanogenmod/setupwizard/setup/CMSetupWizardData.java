@@ -50,7 +50,7 @@ public class CMSetupWizardData extends AbstractSetupData {
             pages.add(new SimCardMissingPage(mContext, this).setHidden(isSimInserted()));
             if (SetupWizardApp.DEBUG) Log.d(TAG, "added sim card missing page");
         }
-        if (SetupWizardUtils.isMultiSimDevice(mContext) && SetupWizardUtils.isOwner()) {
+        if (SetupWizardUtils.isMultiSimDevice(mContext)) {
             pages.add(new ChooseDataSimPage(mContext, this).setHidden(!allSimsInserted()));
             if (SetupWizardApp.DEBUG) Log.d(TAG, "added choose data sim page");
         }
@@ -63,13 +63,10 @@ public class CMSetupWizardData extends AbstractSetupData {
             pages.add(new GmsAccountPage(mContext, this).setHidden(true));
             if (SetupWizardApp.DEBUG) Log.d(TAG, "added GMS page");
         }
-        if (SetupWizardUtils.isOwner()) {
-            pages.add(new CyanogenSettingsPage(mContext, this));
-            addDeviceSpecificPages(pages);
-            pages.add(new OtherSettingsPage(mContext, this));
-            pages.add(new DateTimePage(mContext, this));
-            if (SetupWizardApp.DEBUG) Log.d(TAG, "added owner pages");
-        }
+        pages.add(new CyanogenSettingsPage(mContext, this));
+        addDeviceSpecificPages(pages);
+        pages.add(new OtherSettingsPage(mContext, this));
+        pages.add(new DateTimePage(mContext, this));
 
         pages.add(new FinishPage(mContext, this));
         return new PageList(pages.toArray(new Page[pages.size()]));
