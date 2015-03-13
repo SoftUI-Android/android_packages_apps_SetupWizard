@@ -33,6 +33,8 @@ public abstract class AbstractSetupData extends BroadcastReceiver implements Set
 
     private boolean mIsResumed = false;
 
+    private boolean mIsFinished = false;
+
     private OnResumeRunnable mOnResumeRunnable;
 
     public AbstractSetupData(Context context) {
@@ -184,6 +186,7 @@ public abstract class AbstractSetupData extends BroadcastReceiver implements Set
     }
 
     public void finishPages() {
+        mIsFinished = true;
         for (Page page : mPageList.values()) {
             page.onFinishSetup();
         }
@@ -194,6 +197,10 @@ public abstract class AbstractSetupData extends BroadcastReceiver implements Set
         for (int i = 0; i < mListeners.size(); i++) {
             mListeners.get(i).addFinishRunnable(runnable);
         }
+    }
+
+    public boolean isFinished() {
+        return mIsFinished;
     }
 
     public Bundle save() {
