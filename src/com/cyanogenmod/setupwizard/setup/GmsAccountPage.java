@@ -114,12 +114,8 @@ public class GmsAccountPage extends SetupPage {
             getCallbacks().onPreviousPage();
         } else {
             super.doLoadAction(fragmentManager, action);
+            launchGmsAccountSetup();
         }
-    }
-
-    @Override
-    public void onFragmentReady() {
-        launchGmsAccountSetup();
     }
 
     @Override
@@ -196,6 +192,7 @@ public class GmsAccountPage extends SetupPage {
                 bundle, null, new AccountManagerCallback<Bundle>() {
                     @Override
                     public void run(AccountManagerFuture<Bundle> future) {
+                        boolean error = false;
                         try {
                             Bundle result = future.getResult();
                             Intent intent = result
@@ -204,17 +201,20 @@ public class GmsAccountPage extends SetupPage {
                                     ActivityOptions.makeCustomAnimation(mContext,
                                             android.R.anim.fade_in,
                                             android.R.anim.fade_out);
-                            if (!mFragment.isDetached()) {
-                                mFragment.startActivityForResult(intent,
-                                        SetupWizardApp.REQUEST_CODE_SETUP_GMS, options.toBundle());
-                            } else {
-                                if (getCallbacks().isCurrentPage(GmsAccountPage.this)) {
-                                    getCallbacks().onNextPage();
-                                }
-                            }
+                            mFragment.startActivityForResult(intent,
+                                    SetupWizardApp.REQUEST_CODE_SETUP_GMS, options.toBundle());
                         } catch (OperationCanceledException e) {
+                            error = true;
                         } catch (IOException e) {
+                            error = true;
                         } catch (AuthenticatorException e) {
+                            Log.e(TAG, "Error launching gms account", e);
+                            error = true;
+                        } finally {
+                            if (error && getCallbacks().
+                                    isCurrentPage(GmsAccountPage.this)) {
+                                getCallbacks().onNextPage();
+                            }
                         }
                     }
                 }, null);

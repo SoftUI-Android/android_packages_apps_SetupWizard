@@ -56,20 +56,7 @@ public abstract class SetupPageFragment extends Fragment {
         mRootView = inflater.inflate(getLayoutResource(), container, false);
         mTitleView = (TextView) mRootView.findViewById(android.R.id.title);
         mHeaderView = (ViewGroup )  mRootView.findViewById(R.id.header);
-        getActivity().startPostponedEnterTransition();
         return mRootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mPage = mCallbacks.getPage(mKey);
-        if (mTitleView != null) {
-            mTitleView.setText(mPage.getTitleResId());
-        }
-        initializePage();
-        mPage.onFragmentReady();
-        mCallbacks.onPageLoaded(mPage);
     }
 
     @Override
@@ -85,6 +72,18 @@ public abstract class SetupPageFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPage = mCallbacks.getPage(mKey);
+        if (mTitleView != null) {
+            mTitleView.setText(mPage.getTitleResId());
+        }
+        initializePage();
+        mCallbacks.onPageLoaded(mPage);
+        getActivity().startPostponedEnterTransition();
     }
 
     @Override
