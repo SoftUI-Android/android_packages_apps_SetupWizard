@@ -169,6 +169,10 @@ public class CyanogenSettingsPage extends SetupPage {
         private CheckBox mNavKeys;
         private CheckBox mSecureSms;
 
+        private boolean mHideNavKeysRow = false;
+        private boolean mHideThemeRow = false;
+        private boolean mHideSmsRow = false;
+
         private View.OnClickListener mDefaultThemeClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +203,8 @@ public class CyanogenSettingsPage extends SetupPage {
         @Override
         protected void initializePage() {
             mDefaultThemeRow = mRootView.findViewById(R.id.theme);
-            if (hideThemeSwitch(getActivity())) {
+            mHideThemeRow = hideThemeSwitch(getActivity());
+            if (mHideThemeRow) {
                 mDefaultThemeRow.setVisibility(View.GONE);
             } else {
                 mDefaultThemeRow.setOnClickListener(mDefaultThemeClickListener);
@@ -219,13 +224,15 @@ public class CyanogenSettingsPage extends SetupPage {
             mNavKeysRow = mRootView.findViewById(R.id.nav_keys);
             mNavKeysRow.setOnClickListener(mNavKeysClickListener);
             mNavKeys = (CheckBox) mRootView.findViewById(R.id.nav_keys_checkbox);
-            boolean needsNavBar = true;
+
+            mHideNavKeysRow = true;
             try {
                 IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
-                needsNavBar = windowManager.needsNavigationBar();
+                mHideNavKeysRow = windowManager.needsNavigationBar();
             } catch (RemoteException e) {
             }
-            if (needsNavBar) {
+
+            if (mHideNavKeysRow) {
                 mNavKeysRow.setVisibility(View.GONE);
             } else {
                 updateDisableNavkeysOption();
@@ -242,7 +249,8 @@ public class CyanogenSettingsPage extends SetupPage {
                     0, useSecureSms.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             TextView secureSms = (TextView) mRootView.findViewById(R.id.secure_sms_summary);
             secureSms.setText(secureSmsSpan);
-            if (hideWhisperPush(getActivity())) {
+            mHideSmsRow = hideWhisperPush(getActivity());
+            if (mHideSmsRow) {
                 mSecureSmsRow.setVisibility(View.GONE);
             }
             mSecureSms = (CheckBox) mRootView.findViewById(R.id.secure_sms_checkbox);
@@ -262,30 +270,36 @@ public class CyanogenSettingsPage extends SetupPage {
         }
 
         private void updateThemeOption() {
-            final Bundle myPageBundle = mPage.getData();
-            boolean themesChecked =
-                    !myPageBundle.containsKey(KEY_APPLY_DEFAULT_THEME) || myPageBundle
-                            .getBoolean(KEY_APPLY_DEFAULT_THEME);
-            mDefaultTheme.setChecked(themesChecked);
-            myPageBundle.putBoolean(KEY_APPLY_DEFAULT_THEME, themesChecked);
+            if (!mHideThemeRow) {
+                final Bundle myPageBundle = mPage.getData();
+                boolean themesChecked =
+                        !myPageBundle.containsKey(KEY_APPLY_DEFAULT_THEME) || myPageBundle
+                                .getBoolean(KEY_APPLY_DEFAULT_THEME);
+                mDefaultTheme.setChecked(themesChecked);
+                myPageBundle.putBoolean(KEY_APPLY_DEFAULT_THEME, themesChecked);
+            }
         }
 
         private void updateSmsOption() {
-            final Bundle myPageBundle = mPage.getData();
-            boolean smsChecked = myPageBundle.containsKey(KEY_REGISTER_WHISPERPUSH) ?
-                    myPageBundle.getBoolean(KEY_REGISTER_WHISPERPUSH) :
-                    false;
-            mSecureSms.setChecked(smsChecked);
-            myPageBundle.putBoolean(KEY_REGISTER_WHISPERPUSH, smsChecked);
+            if (!mHideSmsRow) {
+                final Bundle myPageBundle = mPage.getData();
+                boolean smsChecked = myPageBundle.containsKey(KEY_REGISTER_WHISPERPUSH) ?
+                        myPageBundle.getBoolean(KEY_REGISTER_WHISPERPUSH) :
+                        false;
+                mSecureSms.setChecked(smsChecked);
+                myPageBundle.putBoolean(KEY_REGISTER_WHISPERPUSH, smsChecked);
+            }
         }
 
         private void updateDisableNavkeysOption() {
-            boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
-                    Settings.System.NAVBAR_FORCE_ENABLE, 0) != 0;
-            boolean checked = mPage.getData().containsKey(KEY_ENABLE_NAV_KEYS) ?
-                    mPage.getData().getBoolean(KEY_ENABLE_NAV_KEYS) :
-                    enabled;
-            mNavKeys.setChecked(checked);
+            if (!mHideNavKeysRow) {
+                boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
+                        Settings.System.NAVBAR_FORCE_ENABLE, 0) != 0;
+                boolean checked = mPage.getData().containsKey(KEY_ENABLE_NAV_KEYS) ?
+                        mPage.getData().getBoolean(KEY_ENABLE_NAV_KEYS) :
+                        enabled;
+                mNavKeys.setChecked(checked);
+            }
         }
 
     }
