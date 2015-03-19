@@ -198,8 +198,6 @@ public class CyanogenSettingsPage extends SetupPage {
 
         @Override
         protected void initializePage() {
-            final Bundle myPageBundle = mPage.getData();
-
             mDefaultThemeRow = mRootView.findViewById(R.id.theme);
             if (hideThemeSwitch(getActivity())) {
                 mDefaultThemeRow.setVisibility(View.GONE);
@@ -216,10 +214,6 @@ public class CyanogenSettingsPage extends SetupPage {
                 TextView theme = (TextView) mRootView.findViewById(R.id.enable_theme_summary);
                 theme.setText(themeSpan);
                 mDefaultTheme = (CheckBox) mRootView.findViewById(R.id.enable_theme_checkbox);
-                boolean themesChecked = !myPageBundle.containsKey(KEY_APPLY_DEFAULT_THEME)
-                        || myPageBundle.getBoolean(KEY_APPLY_DEFAULT_THEME);
-                mDefaultTheme.setChecked(themesChecked);
-                myPageBundle.putBoolean(KEY_APPLY_DEFAULT_THEME, themesChecked);
             }
 
             mNavKeysRow = mRootView.findViewById(R.id.nav_keys);
@@ -252,10 +246,6 @@ public class CyanogenSettingsPage extends SetupPage {
                 mSecureSmsRow.setVisibility(View.GONE);
             }
             mSecureSms = (CheckBox) mRootView.findViewById(R.id.secure_sms_checkbox);
-            boolean smsChecked = myPageBundle.containsKey(KEY_REGISTER_WHISPERPUSH) &&
-                    myPageBundle.getBoolean(KEY_REGISTER_WHISPERPUSH);
-            mSecureSms.setChecked(smsChecked);
-            myPageBundle.putBoolean(KEY_REGISTER_WHISPERPUSH, smsChecked);
         }
 
         @Override
@@ -267,6 +257,26 @@ public class CyanogenSettingsPage extends SetupPage {
         public void onResume() {
             super.onResume();
             updateDisableNavkeysOption();
+            updateThemeOption();
+            updateSmsOption();
+        }
+
+        private void updateThemeOption() {
+            final Bundle myPageBundle = mPage.getData();
+            boolean themesChecked =
+                    !myPageBundle.containsKey(KEY_APPLY_DEFAULT_THEME) || myPageBundle
+                            .getBoolean(KEY_APPLY_DEFAULT_THEME);
+            mDefaultTheme.setChecked(themesChecked);
+            myPageBundle.putBoolean(KEY_APPLY_DEFAULT_THEME, themesChecked);
+        }
+
+        private void updateSmsOption() {
+            final Bundle myPageBundle = mPage.getData();
+            boolean smsChecked = myPageBundle.containsKey(KEY_REGISTER_WHISPERPUSH) ?
+                    myPageBundle.getBoolean(KEY_REGISTER_WHISPERPUSH) :
+                    false;
+            mSecureSms.setChecked(smsChecked);
+            myPageBundle.putBoolean(KEY_REGISTER_WHISPERPUSH, smsChecked);
         }
 
         private void updateDisableNavkeysOption() {
