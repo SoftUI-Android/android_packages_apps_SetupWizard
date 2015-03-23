@@ -39,7 +39,6 @@ import android.widget.TextView;
 import com.cyanogenmod.setupwizard.ui.SetupPageFragment;
 import com.cyanogenmod.setupwizard.util.SetupWizardUtils;
 import com.cyanogenmod.setupwizard.util.WhisperPushUtils;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -209,7 +208,7 @@ public class CyanogenSettingsPage extends SetupPage {
             } else {
                 mDefaultThemeRow.setOnClickListener(mDefaultThemeClickListener);
                 String defaultTheme = getString(R.string.services_apply_theme,
-                                getString(R.string.default_theme_name));
+                        getString(R.string.default_theme_name));
                 String defaultThemeSummary = getString(R.string.services_apply_theme_label,
                         defaultTheme);
                 final SpannableStringBuilder themeSpan =
@@ -222,9 +221,6 @@ public class CyanogenSettingsPage extends SetupPage {
             }
 
             mNavKeysRow = mRootView.findViewById(R.id.nav_keys);
-            mNavKeysRow.setOnClickListener(mNavKeysClickListener);
-            mNavKeys = (CheckBox) mRootView.findViewById(R.id.nav_keys_checkbox);
-
             mHideNavKeysRow = true;
             try {
                 IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
@@ -235,7 +231,8 @@ public class CyanogenSettingsPage extends SetupPage {
             if (mHideNavKeysRow) {
                 mNavKeysRow.setVisibility(View.GONE);
             } else {
-                updateDisableNavkeysOption();
+                mNavKeysRow.setOnClickListener(mNavKeysClickListener);
+                mNavKeys = (CheckBox) mRootView.findViewById(R.id.nav_keys_checkbox);
             }
 
             mSecureSmsRow = mRootView.findViewById(R.id.secure_sms);
@@ -272,9 +269,8 @@ public class CyanogenSettingsPage extends SetupPage {
         private void updateThemeOption() {
             if (!mHideThemeRow) {
                 final Bundle myPageBundle = mPage.getData();
-                boolean themesChecked =
-                        !myPageBundle.containsKey(KEY_APPLY_DEFAULT_THEME) || myPageBundle
-                                .getBoolean(KEY_APPLY_DEFAULT_THEME);
+                boolean themesChecked = !myPageBundle.containsKey(KEY_APPLY_DEFAULT_THEME) ||
+                        myPageBundle.getBoolean(KEY_APPLY_DEFAULT_THEME);
                 mDefaultTheme.setChecked(themesChecked);
                 myPageBundle.putBoolean(KEY_APPLY_DEFAULT_THEME, themesChecked);
             }
@@ -283,9 +279,8 @@ public class CyanogenSettingsPage extends SetupPage {
         private void updateSmsOption() {
             if (!mHideSmsRow) {
                 final Bundle myPageBundle = mPage.getData();
-                boolean smsChecked = myPageBundle.containsKey(KEY_REGISTER_WHISPERPUSH) ?
-                        myPageBundle.getBoolean(KEY_REGISTER_WHISPERPUSH) :
-                        false;
+                boolean smsChecked = !myPageBundle.containsKey(KEY_REGISTER_WHISPERPUSH) ||
+                        myPageBundle.getBoolean(KEY_REGISTER_WHISPERPUSH);
                 mSecureSms.setChecked(smsChecked);
                 myPageBundle.putBoolean(KEY_REGISTER_WHISPERPUSH, smsChecked);
             }
@@ -293,10 +288,11 @@ public class CyanogenSettingsPage extends SetupPage {
 
         private void updateDisableNavkeysOption() {
             if (!mHideNavKeysRow) {
+                final Bundle myPageBundle = mPage.getData();
                 boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
                         Settings.System.NAVBAR_FORCE_ENABLE, 0) != 0;
-                boolean checked = mPage.getData().containsKey(KEY_ENABLE_NAV_KEYS) ?
-                        mPage.getData().getBoolean(KEY_ENABLE_NAV_KEYS) :
+                boolean checked = myPageBundle.containsKey(KEY_ENABLE_NAV_KEYS) ?
+                        myPageBundle.getBoolean(KEY_ENABLE_NAV_KEYS) :
                         enabled;
                 mNavKeys.setChecked(checked);
             }
