@@ -261,6 +261,10 @@ public class OtherSettingsPage extends SetupPage {
             mGps.setChecked(gpsEnabled);
             mNetwork.setChecked(networkEnabled);
             mLocationAccess.setChecked(gpsEnabled || networkEnabled);
+            mGps.setEnabled(gpsEnabled || networkEnabled);
+            mGpsRow.setEnabled(gpsEnabled || networkEnabled);
+            mNetwork.setEnabled(gpsEnabled || networkEnabled);
+            mNetworkRow.setEnabled(gpsEnabled || networkEnabled);
         }
 
         private void onToggleLocationAccess(boolean checked) {
