@@ -84,8 +84,8 @@ public class CyanogenSettingsPage extends SetupPage {
         final int defaultBrightness = context.getResources().getInteger(
                 com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
 
-        Settings.System.putInt(context.getContentResolver(),
-                Settings.System.NAVBAR_FORCE_ENABLE, enabled ? 1 : 0);
+        Settings.Secure.putInt(context.getContentResolver(),
+                Settings.Secure.DEV_FORCE_SHOW_NAVBAR, enabled ? 1 : 0);
         Settings.System.putInt(context.getContentResolver(),
                 Settings.System.HARDWARE_KEYS_DISABLE, enabled ? 1 : 0);
 
@@ -289,8 +289,8 @@ public class CyanogenSettingsPage extends SetupPage {
         private void updateDisableNavkeysOption() {
             if (!mHideNavKeysRow) {
                 final Bundle myPageBundle = mPage.getData();
-                boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
-                        Settings.System.NAVBAR_FORCE_ENABLE, 0) != 0;
+                boolean enabled = Settings.Secure.getInt(getActivity().getContentResolver(),
+                        Settings.Secure.DEV_FORCE_SHOW_NAVBAR, 0) != 0;
                 boolean checked = myPageBundle.containsKey(KEY_ENABLE_NAV_KEYS) ?
                         myPageBundle.getBoolean(KEY_ENABLE_NAV_KEYS) :
                         enabled;
