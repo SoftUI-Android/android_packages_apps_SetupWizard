@@ -69,6 +69,8 @@
                  android:icon="@mipmap/ic_launcher"
                  android:theme="@style/Theme.Setup"
                  android:allowBackup="false">
+                 android:uiOptions="none"
+                 android:name=".SetupWizardApp">
 
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version" />
@@ -77,9 +79,9 @@
                   android:label="@string/product_name_nameless"
                   android:launchMode="singleInstance"
                   android:excludeFromRecents="true"
-                  android:uiOptions="none"
                   android:configChanges="themeChange|mcc|mnc"
-                  android:immersive="true">
+                  android:immersive="true"
+                  android:windowSoftInputMode="stateAlwaysHidden">
 
             <intent-filter android:priority="9">
 
