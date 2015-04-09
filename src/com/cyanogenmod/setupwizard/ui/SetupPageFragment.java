@@ -43,11 +43,6 @@ public abstract class SetupPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        Bundle args = getArguments();
-        mKey = args.getString(Page.KEY_PAGE_ARGUMENT);
-        if (mKey == null) {
-            throw new IllegalArgumentException("No KEY_PAGE_ARGUMENT given");
-        }
     }
 
     @Override
@@ -63,6 +58,11 @@ public abstract class SetupPageFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        Bundle args = getArguments();
+        mKey = args.getString(Page.KEY_PAGE_ARGUMENT);
+        if (mKey == null) {
+            throw new IllegalArgumentException("No KEY_PAGE_ARGUMENT given");
+        }
         if (!(activity instanceof SetupDataCallbacks)) {
             throw new ClassCastException("Activity implement SetupDataCallbacks");
         }
@@ -88,6 +88,11 @@ public abstract class SetupPageFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // On low mem devices, this fragment might get destroyed by
+        // fragment manager while we are in another activity.
+        if (mPage == null) {
+            mPage = mCallbacks.getPage(mKey);
+        }
         mPage.onActivityResult(requestCode, resultCode, data);
     }
 
