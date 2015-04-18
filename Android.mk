@@ -52,9 +52,6 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     play \
     libphonenumber
 
-LOCAL_JAVA_LIBRARIES := \
-    telephony-common
-
 LOCAL_AAPT_FLAGS := --auto-add-overlay
 LOCAL_AAPT_FLAGS += --extra-packages com.google.android.gms
 
