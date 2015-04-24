@@ -44,6 +44,9 @@ public class CMSetupWizardData extends AbstractSetupData {
     @Override
     protected PageList onNewPageList() {
         ArrayList<Page> pages = new ArrayList<>();
+        if (SetupWizardUtils.hasLeanback(mContext)) {
+            pages.add(new BluetoothSetupPage(mContext, this));
+        }
         pages.add(new WelcomePage(mContext, this));
         pages.add(new WifiSetupPage(mContext, this));
         if (SetupWizardUtils.hasTelephony(mContext)) {
