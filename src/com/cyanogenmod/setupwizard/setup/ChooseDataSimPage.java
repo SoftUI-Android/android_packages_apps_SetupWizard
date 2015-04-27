@@ -125,9 +125,8 @@ public class ChooseDataSimPage extends SetupPage {
                     .getActiveSubscriptionInfoList();
             int simCount = subInfoRecords.size();
             mSubInfoRecords = new SparseArray<SubscriptionInfo>(simCount);
-            for (int i = 0; i < simCount; i++) {
-                SubscriptionInfo subInfoRecord = subInfoRecords.get(i);
-                mSubInfoRecords.put(subInfoRecord.getSubscriptionId(), subInfoRecord);
+            for (SubscriptionInfo subInfoRecord : subInfoRecords) {
+                mSubInfoRecords.put(subInfoRecord.getSimSlotIndex(), subInfoRecord);
             }
             mNameViews = new SparseArray<TextView>(simCount);
             mSignalViews = new SparseArray<ImageView>(simCount);
@@ -172,7 +171,7 @@ public class ChooseDataSimPage extends SetupPage {
             mContext = getActivity().getApplicationContext();
             mPhone = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
             for (int i = 0; i < mPhoneStateListeners.size(); i++) {
-                mPhone.listen(mPhoneStateListeners.get(i),
+                mPhone.listen(mPhoneStateListeners.valueAt(i),
                         PhoneStateListener.LISTEN_SERVICE_STATE
                                 | PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
             }
@@ -191,7 +190,7 @@ public class ChooseDataSimPage extends SetupPage {
             super.onPause();
             mIsAttached = false;
             for (int i = 0; i < mPhoneStateListeners.size(); i++) {
-                mPhone.listen(mPhoneStateListeners.get(i), PhoneStateListener.LISTEN_NONE);
+                mPhone.listen(mPhoneStateListeners.valueAt(i), PhoneStateListener.LISTEN_NONE);
             }
         }
 
