@@ -75,12 +75,14 @@ public abstract class SetupPage implements Page {
         Fragment fragment = getFragment(fragmentManager, action);
         if (action == Page.ACTION_NEXT) {
             Transition t = new Slide(Gravity.RIGHT);
+            t.setDuration(200);
             fragment.setEnterTransition(t);
             fragmentManager.beginTransaction()
                     .replace(R.id.content,fragment, getKey())
                     .commit();
         } else {
             Transition t = new Slide(Gravity.LEFT);
+            t.setDuration(200);
             fragment.setEnterTransition(t);
             fragmentManager.beginTransaction()
                     .replace(R.id.content, fragment, getKey())
