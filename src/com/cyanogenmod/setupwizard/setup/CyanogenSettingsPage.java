@@ -28,7 +28,11 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.IWindowManager;
 import android.view.View;
@@ -48,6 +52,7 @@ public class CyanogenSettingsPage extends SetupPage {
 
     public static final String TAG = "CyanogenSettingsPage";
 
+    public static final String KEY_SEND_METRICS = "send_metrics";
     public static final String KEY_REGISTER_WHISPERPUSH = "register";
     public static final String KEY_ENABLE_NAV_KEYS = "enable_nav_keys";
     public static final String KEY_APPLY_DEFAULT_THEME = "apply_default_theme";
@@ -122,6 +127,7 @@ public class CyanogenSettingsPage extends SetupPage {
             }
         });
         handleWhisperPushRegistration();
+        handleEnableMetrics();
         handleDefaultThemeSetup();
     }
 
@@ -132,6 +138,15 @@ public class CyanogenSettingsPage extends SetupPage {
                 privacyData.getBoolean(CyanogenSettingsPage.KEY_REGISTER_WHISPERPUSH)) {
             Log.i(TAG, "Registering with WhisperPush");
             WhisperPushUtils.startRegistration(mContext);
+        }
+    }
+
+    private void handleEnableMetrics() {
+        Bundle privacyData = getData();
+        if (privacyData != null
+                && privacyData.containsKey(CyanogenSettingsPage.KEY_SEND_METRICS)) {
+            Settings.Secure.putInt(mContext.getContentResolver(), Settings.Secure.STATS_COLLECTION,
+                    privacyData.getBoolean(CyanogenSettingsPage.KEY_SEND_METRICS) ? 1 : 0);
         }
     }
 
@@ -161,9 +176,11 @@ public class CyanogenSettingsPage extends SetupPage {
     }
 
     public static class CyanogenSettingsFragment extends SetupPageFragment {
+        private View mMetricsRow;
         private View mDefaultThemeRow;
         private View mNavKeysRow;
         private View mSecureSmsRow;
+        private CheckBox mMetrics;
         private CheckBox mDefaultTheme;
         private CheckBox mNavKeys;
         private CheckBox mSecureSms;
@@ -171,6 +188,15 @@ public class CyanogenSettingsPage extends SetupPage {
         private boolean mHideNavKeysRow = false;
         private boolean mHideThemeRow = false;
         private boolean mHideSmsRow = false;
+
+        private View.OnClickListener mMetricsClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checked = !mMetrics.isChecked();
+                mMetrics.setChecked(checked);
+                mPage.getData().putBoolean(KEY_SEND_METRICS, checked);
+            }
+        };
 
         private View.OnClickListener mDefaultThemeClickListener = new View.OnClickListener() {
             @Override
@@ -201,6 +227,20 @@ public class CyanogenSettingsPage extends SetupPage {
 
         @Override
         protected void initializePage() {
+            mMetricsRow = mRootView.findViewById(R.id.metrics);
+            mMetricsRow.setOnClickListener(mMetricsClickListener);
+            String osName = getString(R.string.os_name_nameless);
+            String metricsHelpImproveNameless =
+                    getString(R.string.services_help_improve_nameless, osName);
+            String metricsSummary = getString(R.string.services_metrics_label_nameless,
+                    metricsHelpImproveNameless, osName);
+            final SpannableStringBuilder metricsSpan = new SpannableStringBuilder(metricsSummary);
+            metricsSpan.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
+                    0, metricsHelpImproveNameless.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            TextView metrics = (TextView) mRootView.findViewById(R.id.enable_metrics_summary);
+            metrics.setText(metricsSpan);
+            mMetrics = (CheckBox) mRootView.findViewById(R.id.enable_metrics_checkbox);
+
             mDefaultThemeRow = mRootView.findViewById(R.id.theme);
             mHideThemeRow = hideThemeSwitch(getActivity());
             if (mHideThemeRow) {

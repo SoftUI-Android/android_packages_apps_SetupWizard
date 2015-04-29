@@ -19,4 +19,7 @@
     <string name="os_name_nameless" translatable="false">NamelessRom</string>
 
     <string name="setup_services_nameless">Nameless features</string>
+
+    <string name="services_help_improve_nameless">Help improve <xliff:g id="name" example="NamelessRom">%s</xliff:g></string>
+    <string name="services_metrics_label_nameless"><xliff:g id="name" example="Help improve NamelessRom">%s</xliff:g> by automatically sending diagnostic and usage data to Nameless. This information can’t be used to identify you and lends a hand to teams working on things like battery life, app performance, and new <xliff:g id="name" example="NamelessRom">%s</xliff:g> features.</string>
 </resources>
