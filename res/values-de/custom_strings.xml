@@ -17,4 +17,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="setup_services_nameless">Nameless Funktionen</string>
+  <string name="services_help_improve_nameless">Unterstütze <xliff:g id="name" example="NamelessRom">%s</xliff:g> zu verbessern</string>
+  <string name="services_metrics_label_nameless"><xliff:g id="name" example="Help improve NamelessRom">%s </xliff:g> indem Sie automatisch Diagnose- und Nutzungsdaten an Nameless senden. Diese Informationen werden nicht zu Ihrer Identifizierung verwendet. Sie helfen den Teams u. a. bei der Überprüfung der Akkulaufzeit, App-Leistung und der Entwicklung von neuen <xliff:g id="name" example="NamelessRom">%s</xliff:g> Funktionen.</string>
 </resources>
