@@ -17,4 +17,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="setup_services_nameless">Nameless functies</string>
+  <string name="services_help_improve_nameless">Help bij het verbeteren van <xliff:g id="name" example="NamelessRom">%s</xliff:g></string>
+  <string name="services_metrics_label_nameless"><xliff:g id="name" example="Help NamelessRom the verbeteren">%s</xliff:g> door automatisch diagnostische gegevens en gebruiksdata naar Nameles<xliff:g id="name" example="Help improve NamelessRom">%s</xliff:g> the verzenden. Deze informatie kan niet worden gebruikt om u te indentificeren en helpt ontwikkelaars die werken aan het verbeteren van accuduur, prestaties en nieuwe <xliff:g id="name" example="NamelessRom">%s</xliff:g> functies. </string>
 </resources>
