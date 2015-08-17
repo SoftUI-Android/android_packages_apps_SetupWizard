@@ -50,7 +50,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v4 \
     android-support-v13 \
     play \
-    libphonenumber
+    libphonenumber \
+    org.cyanogenmod.platform.sdk
 
 LOCAL_AAPT_FLAGS := --auto-add-overlay
 LOCAL_AAPT_FLAGS += --extra-packages com.google.android.gms
