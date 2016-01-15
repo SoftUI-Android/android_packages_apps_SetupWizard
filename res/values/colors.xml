@@ -17,7 +17,7 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
-    <color name="page_background">#efefef</color>
+    <color name="page_background">#ffffff</color>
 
     <color name="primary">#607d8b</color>
     <color name="primary_dark">#607d8b</color>
